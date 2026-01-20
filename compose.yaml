@@ -3,11 +3,11 @@ services:
     image: postgres
     restart: always
     ports:
-      - 5432:5432
+      - "5433:5432"
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: mysecretpassword
-      POSTGRES_DB: local
+      POSTGRES_USER: ${var_dbUsername}
+      POSTGRES_PASSWORD: ${var_dbPassword}
+      POSTGRES_DB: sveltekit
     volumes:
       - pgdata:/var/lib/postgresql
 volumes:
