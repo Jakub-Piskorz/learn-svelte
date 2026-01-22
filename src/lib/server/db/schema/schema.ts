@@ -1,12 +1,6 @@
-import { pgTable, integer, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
-
-export const user = pgTable('user', {
-	id: text('id').primaryKey(),
-	age: integer('age'),
-	username: text('username').notNull().unique(),
-	passwordHash: text('password_hash').notNull()
-});
+import { user } from './user.ts';
 
 export const session = pgTable('session', {
 	id: text('id').primaryKey(),
@@ -35,5 +29,5 @@ export const gameRelations =
 }))
 
 export type Session = typeof session.$inferSelect;
-
 export type User = typeof user.$inferSelect;
+export type Game = typeof game.$inferSelect;
