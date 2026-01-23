@@ -4,7 +4,7 @@ import { user } from './user.ts';
 
 export const userType = pgTable('user_type', {
 	id: serial('id').primaryKey(),
-	type: text('type'),
+	type: text('type').unique(),
 });
 
 

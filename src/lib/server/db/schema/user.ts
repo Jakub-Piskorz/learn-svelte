@@ -7,3 +7,5 @@ export const user = pgTable('user', {
 	passwordHash: text('password_hash').notNull(),
 	userType: integer('user_type').notNull()
 });
+
+export type User = typeof user.$inferSelect;
