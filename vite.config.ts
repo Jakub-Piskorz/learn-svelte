@@ -12,13 +12,13 @@ export default defineConfig({
 			remotes: {
 				remote: {
 					type: 'module',
-					name: 'remote',
-					entry: 'http://localhost:5174/remoteEntry.js',
+					name: 'microservice',
+					entry: 'http://localhost:2137/remoteEntry.js',
 					entryGlobalName: 'remote',
 					shareScope: 'default',
 				},
 			},
-			filename: 'remoteEntry.js',
+			filename: 'remoteEntry.ts',
 		}),
 	],
 
@@ -59,5 +59,8 @@ export default defineConfig({
 				}
 			}
 		]
+	},
+	build: {
+		target: 'chrome'
 	}
 });

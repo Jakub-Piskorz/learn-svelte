@@ -1,11 +1,10 @@
-<script>
+<script lang="ts">
 	import { browser } from '$app/environment';
 
 	let remoteAppTarget;
 	if (browser) {
 		(async () => {
-			// @ts-ignore
-			const app = await import('remote/remote-app');
+			const app = await import('microservice/remote-app');
 			new app.default({
 				target: remoteAppTarget,
 			});
