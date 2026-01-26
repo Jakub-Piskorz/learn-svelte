@@ -1,15 +1,13 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { onMount, type SvelteComponent } from 'svelte';
 
-	let remoteAppTarget;
-	if (browser) {
-		(async () => {
-			const app = await import('microservice/remote-app');
-			new app.default({
-				target: remoteAppTarget,
-			});
-		})();
-	}
+	let RemoteApp: typeof HTMLElement | null = null;
+	onMount(async () => {
+		const appModule = await import('remote/remote-app');
+		new appModule.default({
+			target: RemoteApp,
+		})
+	});
 
 	let count = 0;
 </script>
@@ -17,4 +15,7 @@
 <h1>Welcome to your library project</h1>
 <p>My name is Jacob and this is my first Svelte app.</p>
 <a href="/next">Click here to view the next page</a>
-<div bind:this={remoteAppTarget} />
+
+{#if (RemoteApp)}
+<div bind:this={RemoteApp} />
+{/if}

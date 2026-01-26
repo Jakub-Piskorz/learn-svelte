@@ -12,7 +12,7 @@ export default defineConfig({
 			remotes: {
 				remote: {
 					type: 'module',
-					name: 'microservice',
+					name: 'remote',
 					entry: 'http://localhost:2137/remoteEntry.js',
 					entryGlobalName: 'remote',
 					shareScope: 'default',
