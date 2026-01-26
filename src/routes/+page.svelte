@@ -1,21 +1,16 @@
 <script lang="ts">
-	import { onMount, type SvelteComponent } from 'svelte';
+	import { resolve } from '$app/paths';
 
-	let RemoteApp: typeof HTMLElement | null = null;
-	onMount(async () => {
-		const appModule = await import('remote/remote-app');
-		new appModule.default({
-			target: RemoteApp,
-		})
-	});
-
-	let count = 0;
+	let count = $state(0);
 </script>
 
 <h1>Welcome to your library project</h1>
 <p>My name is Jacob and this is my first Svelte app.</p>
-<a href="/next">Click here to view the next page</a>
+<a href={resolve('/next')}>Click here to view the next page</a>
+<a href={resolve('/service/microservice')}>Open Microservice page</a>
 
-{#if (RemoteApp)}
-<div bind:this={RemoteApp} />
-{/if}
+<button style="background: purple; color: white; padding: 8px 14px; border-radius: 8px;"
+				id="next" onclick={() => count++}>
+	Count: {count}
+</button>
+

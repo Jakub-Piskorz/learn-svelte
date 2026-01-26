@@ -3,24 +3,9 @@ import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 import { sveltekit } from '@sveltejs/kit/vite';
 import path from 'path';
-import { federation } from '@module-federation/vite';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit(),
-		federation({
-			name: 'host',
-			remotes: {
-				remote: {
-					type: 'module',
-					name: 'remote',
-					entry: 'http://localhost:2137/remoteEntry.js',
-					entryGlobalName: 'remote',
-					shareScope: 'default',
-				},
-			},
-			filename: 'remoteEntry.ts',
-		}),
-	],
+	plugins: [tailwindcss(), sveltekit()],
 
 	resolve: {
 		alias: {
@@ -60,7 +45,4 @@ export default defineConfig({
 			}
 		]
 	},
-	build: {
-		target: 'chrome'
-	}
 });

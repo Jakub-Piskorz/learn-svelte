@@ -21,3 +21,10 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+pnpm-lock.yaml
+package-lock.json
+pnpm-workspace.yaml
+/.__mf__temp
+
+/.idea

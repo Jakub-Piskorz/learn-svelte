@@ -2,7 +2,7 @@
 	"name": "learn-svelte",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "cross-env NODE_OPTIONS='--inspect' vite dev",
 		"build": "vite build && npm run prepack",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -84,8 +84,8 @@
 		"svelte"
 	],
 	"dependencies": {
-		"@module-federation/vite": "^1.9.7",
 		"@node-rs/argon2": "^2.0.2",
+		"cross-env": "^10.1.0",
 		"postgres": "^3.4.7"
 	}
 }
