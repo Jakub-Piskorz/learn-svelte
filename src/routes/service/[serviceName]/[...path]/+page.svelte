@@ -29,7 +29,7 @@
 			<p>{data.error}</p>
 		</div>
 	{/if}
-	<a href={resolve("/")}>Go back to main page</a>
+	<a href={resolve("/")} data-sveltekit-reload>Go back to main page</a>
 </main>
 
 <footer>Standard Footer</footer>
