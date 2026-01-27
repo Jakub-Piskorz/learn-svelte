@@ -2,20 +2,30 @@
 	import { resolve } from '$app/paths';
 
 	let { data } = $props();
+	const { mfe } = data;
+	const body = mfe?.body;
+	const head = mfe?.head;
 </script>
+
+<svelte:head>
+	{#if head}
+		<!--eslint-disable-next-line svelte/no-at-html-tags-->
+		{@html head}
+	{/if}
+</svelte:head>
 
 <header>
 	<h1>Host Header</h1>
-	<h2>Fetched microservice: {data.serviceName}</h2>
+	<h2>Fetched microservice: {mfe?.serviceName || "none"}</h2>
 </header>
 
 <main style="padding: 2rem;">
-	{#if data.mfeHtml}
+	{#if body}
 		<!--eslint-disable-next-line svelte/no-at-html-tags-->
-		{@html data.mfeHtml}
+		{@html body}
 	{:else}
 		<div class="error-box">
-			<h2>Error loading {data.serviceName}</h2>
+			<h2>Error loading {mfe?.serviceName || "none"}</h2>
 			<p>{data.error}</p>
 		</div>
 	{/if}

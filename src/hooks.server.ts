@@ -3,7 +3,6 @@ import * as auth from '../src/lib/server/auth.ts';
 import { sequence } from '@sveltejs/kit/hooks';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
-	console.log('handle auth hook');
 	const sessionToken = event.cookies.get(auth.sessionCookieName);
 
 	if (!sessionToken) {
@@ -29,16 +28,12 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 
 // Needed to load resources from micro-frontends on dev server. On production, not needed.
 const handleProxy: Handle = async ({ event, resolve }) => {
-	if (event.url.pathname.startsWith('/_app/')) {
-		const referer = event.request.headers.get('referer') || '';
+	if (event.url.pathname.startsWith('/mfe-assets')) {
+		const targetPath = event.url.pathname.replace('/mfe-assets', '');
+		const mfeUrl = `http://localhost:2137${targetPath}${event.url.search}`;
 
-		// Logic: If the page asking for this asset is /service/loans, use port 5174
-		// If it's /service/microservice, use port 2137
-		let port = 2137; // Default
-		if (referer.includes('/service/loans')) port = 5174;
-		if (referer.includes('/service/microservice')) port = 2137;
-
-		return fetch(`http://localhost:${port}${event.url.pathname}`);
+		// Fetch the asset from the MFE and return it to the browser
+		return fetch(mfeUrl);
 	}
 
 	return resolve(event);

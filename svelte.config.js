@@ -17,7 +17,8 @@ const config = {
 			$lib: 'src/lib',
 			$libServer: 'src/lib/server'
 		}
-	}
+	},
+	compilerOptions: { customElement: true }
 };
 
 export default config;

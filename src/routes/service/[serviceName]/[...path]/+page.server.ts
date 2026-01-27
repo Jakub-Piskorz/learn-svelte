@@ -11,22 +11,38 @@ export const load = async ({ params, fetch }) => {
 	const port = portMap[serviceName];
 	if (!port) throw error(404, 'Service Not Found');
 
-	const mfeUrl = `http://localhost:${port}/${path ?? ''}`;
+	const mfeUrl = `http://localhost:${port}/mfe-assets/${path ?? ''}?fragment=true`;
 
 	try {
 		const res = await fetch(mfeUrl);
-		if (!res.ok) throw new Error(`MFE returned ${res.status}`);
+		let html = await res.text();
 
-		// We return the HTML as a string inside an object
-		const html = await res.text();
+		// THE FIX: Brute force rewrite all relative MFE paths to absolute URLs
+		// This covers scripts, imports, and Vite's internal @fs paths
+		const mfeOrigin = `http://localhost:${port}`;
+		html = html.replace(/src="\/mfe-assets\//g, `src="${mfeOrigin}/mfe-assets/`);
+		html = html.replace(/href="\/mfe-assets\//g, `href="${mfeOrigin}/mfe-assets/`);
+		// This part fixes the internal Vite imports inside the scripts
+		html = html.replace(/from "\/mfe-assets\//g, `from "${mfeOrigin}/mfe-assets/`);
+		html = html.replace(/import\("\/mfe-assets\//g, `import("${mfeOrigin}/mfe-assets/`);
+
+		const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/);
+		const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/);
+
+		const head = headMatch ? headMatch[1] : undefined;
+		const body = bodyMatch ? bodyMatch[1] : html;
 		return {
-			mfeHtml: html,
-			serviceName
+			mfe: {
+				head,
+				body,
+				serviceName
+			},
+			error: null
 		};
 	} catch (err) {
 		return {
-			mfeHtml: null,
-			error: `Could not reach ${serviceName}. Error: ${err.message}`,
+			mfeHtml: {},
+			error: `Could not reach ${serviceName}.`
 		};
 	}
 };

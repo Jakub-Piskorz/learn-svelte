@@ -1,3 +1,7 @@
+<script>
+	let counter = $state(0);
+</script>
+
 <div>
 	<h1>Microservice served from port: 2137</h1>
 	<p>This is remote microservice. That's how it works:</p>
@@ -6,6 +10,8 @@
 		<li><code>serviceName</code> is mapped to port (in this case: 2137), creating <code>newUrl.</code></li>
 		<li>fetched data is then rendered on a page as <code>{'{@html data.mfeHtml}'}</code> inside the <code>&lt;main&gt;</code> tag</li>
 	</ol>
+
+	<button onclick={() => counter++}>Remote counter: {counter}</button>
 </div>
 
 <style>
