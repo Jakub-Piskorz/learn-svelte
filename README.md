@@ -56,28 +56,3 @@ To publish your library to [npm](https://www.npmjs.com):
 ```sh
 npm publish
 ```
-
-```
-◇  What's next? ───────────────────────────────────────────────────────────╮
-│                                                                          │
-│  📁 Project steps                                                        │
-│                                                                          │
-│    1: cd learn-svelte                                                    │
-│    2: npm run dev -- --open                                              │
-│                                                                          │
-│  To close the dev server, hit Ctrl-C                                     │
-│                                                                          │
-│  🧩 Add-on steps                                                         │
-│                                                                          │
-│    drizzle:                                                              │
-│      - You will need to set DATABASE_URL in your production environment  │
-│      - Run npm run db:start to start the docker container                │
-│      - Run npm run db:push to update your database schema                │
-│    lucia:                                                                │
-│      - Run npm run db:push to update your database schema                │
-│      - Visit /demo/lucia route to view the demo                          │
-│                                                                          │
-│  Stuck? Visit us at https://svelte.dev/chat                              │
-│                                                                          │
-├──────────────────────────────────────────────────────────────────────────╯
-```
