@@ -7,7 +7,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		paths: {
-			base: '/mfe-assets',
+			base: '/remote-app',
 			// FORCE absolute URLs for assets in dev so they bypass the host proxy
 			assets: process.env.NODE_ENV === 'development'
 				? 'http://localhost:2137'

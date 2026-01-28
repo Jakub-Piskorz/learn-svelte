@@ -28,8 +28,8 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 
 // Needed to load resources from micro-frontends on dev server. On production, not needed.
 const handleProxy: Handle = async ({ event, resolve }) => {
-	if (event.url.pathname.startsWith('/mfe-assets')) {
-		const targetPath = event.url.pathname.replace('/mfe-assets', '');
+	if (event.url.pathname.startsWith('/remote-app')) {
+		const targetPath = event.url.pathname.replace('/remote-app', '');
 		const mfeUrl = `http://localhost:2137${targetPath}${event.url.search}`;
 
 		// Fetch the asset from the MFE and return it to the browser

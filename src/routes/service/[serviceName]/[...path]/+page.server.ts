@@ -11,20 +11,20 @@ export const load = async ({ params, fetch }) => {
 	const port = portMap[serviceName];
 	if (!port) throw error(404, 'Service Not Found');
 
-	const mfeUrl = `http://localhost:${port}/mfe-assets/${path ?? ''}?fragment=true`;
+	const remoteAppUrl = `http://localhost:${port}/remote-app/${path ?? ''}?fragment=true`;
 
 	try {
-		const res = await fetch(mfeUrl);
+		const res = await fetch(remoteAppUrl);
 		let html = await res.text();
 
 		// THE FIX: Brute force rewrite all relative MFE paths to absolute URLs
 		// This covers scripts, imports, and Vite's internal @fs paths
 		const mfeOrigin = `http://localhost:${port}`;
-		html = html.replace(/src="\/mfe-assets\//g, `src="${mfeOrigin}/mfe-assets/`);
-		html = html.replace(/href="\/mfe-assets\//g, `href="${mfeOrigin}/mfe-assets/`);
+		html = html.replace(/src="\/remote-app\//g, `src="${mfeOrigin}/remote-app/`);
+		html = html.replace(/href="\/remote-app\//g, `href="${mfeOrigin}/remote-app/`);
 		// This part fixes the internal Vite imports inside the scripts
-		html = html.replace(/from "\/mfe-assets\//g, `from "${mfeOrigin}/mfe-assets/`);
-		html = html.replace(/import\("\/mfe-assets\//g, `import("${mfeOrigin}/mfe-assets/`);
+		html = html.replace(/from "\/remote-app\//g, `from "${mfeOrigin}/remote-app/`);
+		html = html.replace(/import\("\/remote-app\//g, `import("${mfeOrigin}/remote-app/`);
 
 		const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/);
 		const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/);
@@ -32,7 +32,7 @@ export const load = async ({ params, fetch }) => {
 		const head = headMatch ? headMatch[1] : undefined;
 		const body = bodyMatch ? bodyMatch[1] : html;
 		return {
-			mfe: {
+			remoteApp: {
 				head,
 				body,
 				serviceName
@@ -41,7 +41,7 @@ export const load = async ({ params, fetch }) => {
 		};
 	} catch (err) {
 		return {
-			mfeHtml: {},
+			remoteApp: {},
 			error: `Could not reach ${serviceName}.`
 		};
 	}

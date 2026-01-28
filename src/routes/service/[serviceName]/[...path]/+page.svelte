@@ -2,9 +2,9 @@
 	import { resolve } from '$app/paths';
 
 	let { data } = $props();
-	const { mfe } = data;
-	const body = mfe?.body;
-	const head = mfe?.head;
+	const { remoteApp } = data;
+	const body = remoteApp?.body;
+	const head = remoteApp?.head;
 </script>
 
 <svelte:head>
@@ -16,7 +16,7 @@
 
 <header>
 	<h1>Host Header</h1>
-	<h2>Fetched microservice: {mfe?.serviceName || "none"}</h2>
+	<h2>Fetched microservice: {remoteApp?.serviceName || "none"}</h2>
 </header>
 
 <main style="padding: 2rem;">
@@ -25,7 +25,7 @@
 		{@html body}
 	{:else}
 		<div class="error-box">
-			<h2>Error loading {mfe?.serviceName || "none"}</h2>
+			<h2>Error loading {remoteApp?.serviceName || "none"}</h2>
 			<p>{data.error}</p>
 		</div>
 	{/if}
