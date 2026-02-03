@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import * as Menubar from '$lib/components/ui/menubar';
+	import {Root, Menu, Trigger, Item, Shortcut, Separator, Content} from '$lib/components/ui/menubar';
 
 	let count = $state(0);
 </script>
@@ -15,19 +15,19 @@
 	Count: {count}
 </button>
 
-<Menubar.Root>
-	<Menubar.Menu>
-		<Menubar.Trigger>File</Menubar.Trigger>
-		<Menubar.Content>
-			<Menubar.Item>
+<Root>
+	<Menu>
+		<Trigger>File</Trigger>
+		<Content>
+			<Item>
 				New Tab
-				<Menubar.Shortcut>⌘T</Menubar.Shortcut>
-			</Menubar.Item>
-			<Menubar.Item>New Window</Menubar.Item>
-			<Menubar.Separator />
-			<Menubar.Item>Share</Menubar.Item>
-			<Menubar.Separator />
-			<Menubar.Item>Print</Menubar.Item>
-		</Menubar.Content>
-	</Menubar.Menu>
-</Menubar.Root>
+				<Shortcut>⌘T</Shortcut>
+			</Item>
+			<Item>New Window</Item>
+			<Separator />
+			<Item>Share</Item>
+			<Separator />
+			<Item>Print</Item>
+		</Content>
+	</Menu>
+</Root>
