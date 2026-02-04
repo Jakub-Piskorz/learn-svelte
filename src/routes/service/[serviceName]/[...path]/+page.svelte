@@ -14,12 +14,7 @@
 	{/if}
 </svelte:head>
 
-<header>
-	<h1>Host Header</h1>
-	<h2>Fetched microservice: {remoteApp?.serviceName || "none"}</h2>
-</header>
-
-<main style="padding: 2rem;">
+<div>
 	{#if body}
 		<!--eslint-disable-next-line svelte/no-at-html-tags-->
 		{@html body}
@@ -30,6 +25,4 @@
 		</div>
 	{/if}
 	<a href={resolve("/")} data-sveltekit-reload>Go back to main page</a>
-</main>
-
-<footer>Standard Footer</footer>
+</div>
