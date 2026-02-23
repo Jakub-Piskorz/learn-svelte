@@ -4,3 +4,4 @@ export { session } from './session';
 export { user } from './user';
 export { gameRelations } from './gameRelations';
 export { game } from './game';
+export { event } from './event';
