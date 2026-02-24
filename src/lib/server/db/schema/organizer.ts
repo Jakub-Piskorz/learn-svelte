@@ -1,6 +1,6 @@
 import { pgTable, text } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
-import { event } from '$libServer/db/schema/event';
+import { event } from './event';
 
 export const organizer = pgTable('organizer', {
 	id: text('id').primaryKey(),

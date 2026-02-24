@@ -4,4 +4,6 @@ export * from './session';
 export * from './user';
 export * from './gameRelations';
 export * from './game';
+export * from './organizer';
+export * from './location';
 export * from './event';
