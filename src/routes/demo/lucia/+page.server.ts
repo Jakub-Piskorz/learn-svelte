@@ -20,7 +20,7 @@ export const actions: Actions = {
 	}
 };
 
-function requireLogin() {
+export function requireLogin() {
 	const { locals } = getRequestEvent();
 
 	if (!locals.user) {
