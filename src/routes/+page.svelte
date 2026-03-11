@@ -2,6 +2,14 @@
 	import { resolve } from '$app/paths';
 
 	let count = $state(0);
+	const onSend = async () => {
+		const res: Response = await fetch("/api/admin/create-event", {
+			method: 'POST',
+			body: JSON.stringify({
+				user: "testUserKurwa"
+			})
+		})
+	}
 </script>
 
 <h1>Welcome to your library project</h1>
@@ -12,4 +20,9 @@
 <button style="background: purple; color: white; padding: 8px 14px; border-radius: 8px;"
 				id="next" onclick={() => count++}>
 	Count: {count}
+</button>
+<button style="background: purple; color: white; padding: 8px 14px; border-radius: 8px;"
+	onclick={onSend}
+>
+	Wyślij
 </button>
