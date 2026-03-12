@@ -1,4 +1,4 @@
-import { defineConfig } from 'drizzle-kit';
+import { type Config, defineConfig } from 'drizzle-kit';
 
 if (!process.env.var_dbUrl) throw new Error('var_dbUrl is not set');
 
@@ -7,5 +7,6 @@ export default defineConfig({
 	dialect: 'postgresql',
 	dbCredentials: { url: process.env.var_dbUrl },
 	verbose: true,
-	strict: true
-});
+	strict: true,
+	out: "./drizzle"
+}) satisfies Config;
