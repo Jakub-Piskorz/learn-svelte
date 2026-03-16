@@ -1,6 +1,7 @@
-import { integer, pgTable, text } from 'drizzle-orm/pg-core';
+import { integer, text } from 'drizzle-orm/pg-core';
+import { mySchema } from './mySchema';
 
-export const user = pgTable('user', {
+export const user = mySchema.table('user', {
 	id: text('id').primaryKey(),
 	age: integer('age'),
 	username: text('username').notNull().unique(),

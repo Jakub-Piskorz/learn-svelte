@@ -1,9 +1,11 @@
+export * from './event';
+export * from './organizer';
 export * from './userType';
-export * from './platform';
 export * from './session';
 export * from './user';
-export * from './gameRelations';
+export * from './platform';
 export * from './game';
-export * from './organizer';
 export * from './location';
-export * from './event';
+export * from './gamesToPlatforms';
+
+export * from './mySchema';

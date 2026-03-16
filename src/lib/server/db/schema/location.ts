@@ -1,17 +1,9 @@
-import { pgTable, text } from 'drizzle-orm/pg-core';
-import { relations } from 'drizzle-orm';
-import { event } from "./event"
+import { text } from 'drizzle-orm/pg-core';
+import { mySchema } from './mySchema';
 
-export const location = pgTable('location', {
+export const location = mySchema.table('location', {
 	id: text('id').primaryKey(),
 	name: text('name')
 })
-
-export const eventRelations = relations(event, ({ one }) => ({
-	type: one(location, {
-		fields: [event.locationId],
-		references: [location.id]
-	})
-}));
 
 export type Location = typeof location.$inferSelect;

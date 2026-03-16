@@ -1,10 +1,8 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import * as schema from './schema';
+import { drizzle } from 'drizzle-orm/node-postgres';
 import { env } from '$env/dynamic/private';
+import { relations } from '$libServer/db/relations';
 
 if (!env.var_dbUrl) throw new Error('var_dbUrl is not set');
 
-const client = postgres(env.var_dbUrl);
 
-export const db = drizzle(client, { schema });
+export const db = drizzle(env.var_dbUrl, {relations});
