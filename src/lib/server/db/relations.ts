@@ -4,6 +4,10 @@ import {defineRelations} from "drizzle-orm";
 export const relations = defineRelations(schema, (r) => ({
 	user: {
 		sessions: r.many.session(),
+		userType: r.one.userType({
+			from: r.user.userTypeId,
+			to: r.userType.id
+		})
 	},
 	session: {
 		user: r.one.user({
@@ -15,38 +19,16 @@ export const relations = defineRelations(schema, (r) => ({
 		location: r.one.location({
 			from: r.event.locationId,
 			to: r.location.id
+		}),
+		organizer: r.one.organizer({
+			from: r.event.organizerId,
+			to: r.organizer.id
 		})
 	},
-	// game: {
-	// 	releasedOn: r.many.platform({
-	// 		from: r.game.id.through(r.)
-	// 	})
-	// }
+	game: {
+		releasedOn: r.many.platform({
+			from: r.game.id.through(r.gamesToPlatforms.gameId),
+			to: r.platform.id.through(r.gamesToPlatforms.platformId),
+		})
+	}
 }));
-
-// export const eventRelations = relations(event, ({ one }) => ({
-// 	type: one(location, {
-// 		fields: [event.locationId],
-// 		references: [location.id]
-// 	})
-// }));
-
-// export const gameRelations = relations(game, ({ many }) => ({
-// 	releasedOn: many(platform)
-// }));
-//
-// export const organizerRelations = relations(event, ({ one }) => ({
-// 	type: one(organizer, {
-// 		fields: [event.organizerId],
-// 		references: [organizer.id]
-// 	})
-// }));
-
-// // Many users <-> one userType
-// // Every user has a userType.
-// export const userTypeRelation = relations(user, ({ one }) => ({
-// 	type: one(userType, {
-// 		fields: [user.userType],
-// 		references: [userType.id]
-// 	})
-// }));
