@@ -1,9 +1,9 @@
-import { text } from 'drizzle-orm/pg-core';
+import { serial, text } from 'drizzle-orm/pg-core';
 import { mySchema } from './mySchema';
 
 export const organizer = mySchema.table('organizer', {
-	id: text('id').primaryKey(),
-	name: text('name')
+	id: serial('id').primaryKey(),
+	name: text('name').unique()
 })
 
 export type Organizer = typeof organizer.$inferSelect;
