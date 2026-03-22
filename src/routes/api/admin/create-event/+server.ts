@@ -15,7 +15,6 @@ export async function POST({locals}) {
 		}
 	})
 
-
 	if (!dbUser) error(404);
-	return json(dbUser);
+	return json("TODO");
 }

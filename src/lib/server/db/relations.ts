@@ -25,6 +25,12 @@ export const relations = defineRelations(schema, (r) => ({
 			to: r.organizer.id
 		})
 	},
+	location: {
+		events: r.many.event()
+	},
+	organizer: {
+		events: r.many.event()
+	},
 	game: {
 		releasedOn: r.many.platform({
 			from: r.game.id.through(r.gamesToPlatforms.gameId),
