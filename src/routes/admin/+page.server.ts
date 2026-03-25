@@ -1,8 +1,8 @@
 import { requireLogin } from '../demo/lucia/+page.server';
-import notAdminError from '$libServer/helpers/notAdminError';
+import errorIfNotAdmin from '$libServer/helpers/errorIfNotAdmin';
 
 export const load = async () => {
 	const user = await requireLogin();
-	await notAdminError(user.id, "Only administrators can view this page");
+	await errorIfNotAdmin("Only administrators can view this page");
 	return { user };
 };

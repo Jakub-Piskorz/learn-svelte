@@ -3,5 +3,5 @@ import { mySchema } from './mySchema';
 
 export const platform = mySchema.table('platform', {
 	id: text('id').primaryKey(),
-	name: text('name')
+	name: text('name').unique()
 });

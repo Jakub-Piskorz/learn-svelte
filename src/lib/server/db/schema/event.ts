@@ -3,6 +3,7 @@ import { mySchema } from './mySchema';
 
 export const event = mySchema.table('event', {
 	id: text('id').primaryKey(),
+	name: text('name'),
 	organizerId: text('organizerId'),
 	description: text('description'),
 	locationId: text('locationId'),

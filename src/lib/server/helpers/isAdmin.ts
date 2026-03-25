@@ -1,11 +1,16 @@
 import { error } from '@sveltejs/kit';
 import { db } from '$libServer/db';
+import { getRequestEvent } from '$app/server';
 
-export default async (userId?: string) => {
+export default async () => {
+	const { locals } = getRequestEvent();
+	const userId = locals.user?.id;
+
 	if (!userId) {
 		error(404, "User not provided!");
 	}
-	const dbUser = await db.query.user.findFirst({
+
+	const user = await db.query.user.findFirst({
 		where: {
 			id: userId
 		},
@@ -13,8 +18,8 @@ export default async (userId?: string) => {
 			userType: true
 		}
 	})
-	if (!dbUser) {
+	if (!user) {
 		error(404, "User not found.");
 	}
-	return dbUser.userType?.type === "admin";
+	return user.userType?.type === "admin";
 }
