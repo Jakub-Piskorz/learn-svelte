@@ -1,5 +1,6 @@
 import type { PageServerLoad } from '../../../../.svelte-kit/types/src/routes/demo/lucia/$types';
-import { requireLogin } from '../../demo/lucia/+page.server';
+
+import { requireLogin } from '$libServer/helpers/requireLogin';
 
 export const load: PageServerLoad = async () => {
 	const user = requireLogin();
