@@ -1,12 +1,12 @@
-import { text } from 'drizzle-orm/pg-core';
+import { integer, serial, text } from 'drizzle-orm/pg-core';
 import { mySchema } from './mySchema';
 
 export const event = mySchema.table('event', {
-	id: text('id').primaryKey(),
-	name: text('name'),
-	organizerId: text('organizerId'),
+	id: serial('id').primaryKey(),
+	name: text('name').notNull(),
+	organizerId: integer('organizerId').notNull(),
 	description: text('description'),
-	locationId: text('locationId'),
+	locationId: integer('locationId').notNull(),
 	plannedDuration: text('plannedDuration'),
 });
 

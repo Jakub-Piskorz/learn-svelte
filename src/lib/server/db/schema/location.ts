@@ -3,7 +3,7 @@ import { mySchema } from './mySchema';
 
 export const location = mySchema.table('location', {
 	id: serial('id').primaryKey(),
-	name: text('name').unique()
+	name: text('name').unique().notNull()
 })
 
 export type Location = typeof location.$inferSelect;
