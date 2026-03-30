@@ -1,8 +1,8 @@
-import { json } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import errorIfNotAdmin from '$libServer/helpers/errorIfNotAdmin';
 import type { Actions } from '../../../.svelte-kit/types/src/routes/demo/lucia/login/$types';
 import { requireLogin } from '$libServer/helpers/requireLogin';
-import { createLocation } from '$libServer/location/create-location/services';
+import { createLocation as _createLocation } from '$libServer/location/create-location/services';
 
 export const load = async () => {
 	const user = await requireLogin();
@@ -10,11 +10,16 @@ export const load = async () => {
 	return { user };
 };
 
-export const actions: Actions = {
-	createlocation: async (event: any) => {
-		const formData = await event.request.formData();
-		const name = formData.get('name');
-		const res = await createLocation({name})
-		return {success: true, res};
-	}
-}
+export const actions = {
+	'create-location': async ({request}) => {
+		await requireLogin();
+		const data = await request.formData();
+		const name = data.get('name') as string;
+		if (!name) {
+			fail(404, { name, incorrect: true });
+		}
+		const result = await _createLocation({name});
+		return { success: true, result: result.fields };
+	},
+
+} satisfies Actions

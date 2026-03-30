@@ -15,7 +15,7 @@
 <h1 class="font-bold text-xl">Admin panel</h1>
 
 <div class="grid grid-cols-3 gap-5 mt-5 align-items-center justify-content-between">
-	<form method="post" action="?/createlocation" use:enhance>
+	<form method="post" action="?/create-location" use:enhance>
 		<Card.Root class="w-[300px]">
 			<Card.Header>
 				<Card.Title>Add new location</Card.Title>
