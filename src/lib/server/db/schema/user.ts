@@ -1,5 +1,6 @@
 import { integer, text } from 'drizzle-orm/pg-core';
 import { mySchema } from './mySchema';
+import type { UserType } from '$libServer/db/schema/userType';
 
 export const user = mySchema.table('user', {
 	id: text('id').primaryKey(),
@@ -10,3 +11,6 @@ export const user = mySchema.table('user', {
 });
 
 export type User = typeof user.$inferSelect;
+export type UserWithType = User & {
+	userType: UserType
+}

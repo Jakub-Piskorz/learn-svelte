@@ -5,3 +5,5 @@ export const userType = mySchema.table('user_type', {
 	id: serial('id').primaryKey(),
 	type: text('type').unique(),
 });
+
+export type UserType = typeof userType.$inferSelect;

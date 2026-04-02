@@ -1,8 +1,5 @@
-import { error } from '@sveltejs/kit';
-import whoAmI from '$libServer/helpers/whoAmI';
+import type { UserWithType } from '$libServer/db/schema';
 
-export default async () => {
-	const me = await whoAmI(true);
-	if (!me) return error(401, "Invalid or missing credentials")
-	return me.userType!.type === "admin";
+export default async (user: UserWithType) => {
+	return user.userType.type === "admin";
 }
