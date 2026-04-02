@@ -1,12 +1,8 @@
-import { getRequestEvent } from '$app/server';
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
+import whoAmI from '$libServer/helpers/whoAmI';
 
 export async function requireLogin() {
-	const { locals } = getRequestEvent();
-
-	if (!locals.user) {
-		return redirect(302, '/demo/lucia/login');
-	}
-
-	return locals.user;
+	const me = await whoAmI(true);
+	if (!me) return error(401, "Invalid or missing credentials")
+	return me;
 }
