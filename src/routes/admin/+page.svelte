@@ -15,7 +15,7 @@
 
 <h1 class="font-bold text-xl">Admin panel</h1>
 <div class="grid grid-cols-3 gap-5 mt-5 align-items-center justify-content-between">
-	<div class="h-60 col-span-3">
+	<div class="h-59 col-span-3">
 		<div class="rounded-md border flex flex-col max-h-full overflow-y-auto">
 			<Table.Root>
 				<Table.Header class="sticky top-0 z-10 bg-white">
@@ -91,9 +91,7 @@
 				<Card.Description>Organizers are organisations or private people who host events.</Card.Description>
 			</Card.Header>
 			<Card.Content class="grow-1">
-				<form method="POST">
-					<Input name="name" type="text" bind:value={newOrganizerName} placeholder="Organizer name" />
-				</form>
+				<Input name="name" type="text" bind:value={newOrganizerName} placeholder="Organizer name" />
 			</Card.Content>
 			<Card.Footer>
 				<Button type="submit" class="w-full">Add Organizer</Button>
