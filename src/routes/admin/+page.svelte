@@ -4,9 +4,12 @@
 	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
+	import { SimpleTable } from '$lib/components/ui/table/index.js';
 
 	const { data, form } = $props();
 	const user = () => data.user;
+	const organizerRows = () => data.organizers.map(org => ({id: org.id, value: org.name}))
+	console.log(organizerRows());
 	let newEventName = $state('');
 	let newLocationName = $state('');
 	let newOrganizerName = $state('');
@@ -14,8 +17,8 @@
 </script>
 
 <h1 class="font-bold text-xl">Admin panel</h1>
-<div class="grid grid-cols-3 gap-5 mt-5 align-items-center justify-content-between">
-	<div class="h-59 col-span-3">
+<div class="grid grid-cols-6 gap-5 mt-5 align-items-center justify-content-between">
+	<div class="max-h-59 col-span-3">
 		<div class="rounded-md border flex flex-col max-h-full overflow-y-auto">
 			<Table.Root>
 				<Table.Header class="sticky top-0 z-10 bg-white">
@@ -51,7 +54,13 @@
 			</Table.Root>
 		</div>
 	</div>
-	<form method="post" action="?/create-location" use:enhance>
+	<div class="max-h-59 col-span-3">
+		<SimpleTable
+			class="rounded-md border flex flex-col max-h-full overflow-y-auto"
+			rows={organizerRows()}
+			columns={["Organizer Id", "Organizer name"]} />
+	</div>
+	<form method="post" action="?/create-location" class="col-span-2" use:enhance>
 		<Card.Root class="w-[300px]">
 			<Card.Header>
 				<Card.Title>Add new location</Card.Title>
@@ -67,7 +76,7 @@
 		{#if form?.missing}<p class="error">The location name provided</p>{/if}
 	</form>
 
-	<form method="post" action="?/create-event" use:enhance>
+	<form method="post" action="?/create-event" class="col-span-2" use:enhance>
 		<Card.Root class="w-[300px]">
 			<Card.Header>
 				<Card.Title>Add new event</Card.Title>
@@ -84,7 +93,7 @@
 		</Card.Root>
 	</form>
 
-	<form method="post" action="?/create-organizer" use:enhance>
+	<form method="post" action="?/create-organizer" class="col-span-2" use:enhance>
 		<Card.Root class="w-[300px]">
 			<Card.Header>
 				<Card.Title>Add new organizer</Card.Title>

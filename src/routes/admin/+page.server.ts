@@ -4,13 +4,14 @@ import type { Actions } from '../../../.svelte-kit/types/src/routes/demo/lucia/l
 import { createLocation, deleteLocation } from '$libServer/location/services';
 import { createOrganizer, deleteOrganizer } from '$libServer/organizer/services';
 import { db } from '$libServer/db';
-import whoAmI from '$libServer/helpers/whoAmI';
+import getUserFromToken from '$libServer/helpers/getUserFromToken';
 
 export const load = async () => {
 	await requireAdmin("Only administrators can view this page");
-	const me = await whoAmI();
+	const me = getUserFromToken();
 	const locations = await db.query.location.findMany();
-	return { user: me, locations };
+	const organizers = await db.query.organizer.findMany();
+	return { user: me, locations, organizers };
 };
 
 export const actions = {
