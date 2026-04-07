@@ -1,18 +1,31 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
+	import * as Select from '$lib/components/ui/select';
 	import { enhance } from '$app/forms';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { SimpleTable } from '$lib/components/ui/table/index.js';
 
+	type FormData = {
+		id: string;
+		value: string;
+	}
+
 	const { data, form } = $props();
 	const user = () => data.user;
-	const organizerRows = () => data.organizers.map(org => ({id: org.id, value: org.name}))
+	const organizerRows: () => FormData[] = () => data.organizers.map(org => ({ id: String(org.id), value: org.name }));
 	console.log(organizerRows());
 	let newEventName = $state('');
 	let newLocationName = $state('');
 	let newOrganizerName = $state('');
+	let selectedOrganizer: string | undefined = $state();
+	let selectedOrganizerName: string | undefined = $derived(
+		data.organizers.find(org => String(org.id) === selectedOrganizer)?.name || "Select an organizer",
+	);
+	let selectedLocation: string | undefined = $state();
+	let a = $state(1);
+	let b = $state(2);
 
 </script>
 
@@ -85,6 +98,21 @@
 			<Card.Content class="grow-1">
 				<form method="POST">
 					<Input name="name" type="text" bind:value={newEventName} placeholder="Event name" />
+					<Select.Root type="single" name="selectedOrganizer" bind:value={selectedOrganizer}>
+						<Select.Trigger>
+							{selectedOrganizerName}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Organizers</Select.Label>
+								{#each organizerRows() as organizer (organizer.id)}
+									<Select.Item value={organizer.id} label={organizer.value}>
+										{organizer.value}
+									</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
 				</form>
 			</Card.Content>
 			<Card.Footer>
