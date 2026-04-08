@@ -13,9 +13,13 @@
 	}
 
 	const { data, form } = $props();
-	const user = () => data.user;
-	const organizerRows: () => FormData[] = () => data.organizers.map(org => ({ id: String(org.id), value: org.name }));
-	console.log(organizerRows());
+	const user = $derived(data.user);
+	const organizers: FormData[] = $derived(
+		data.organizers.map(org => ({ id: String(org.id), value: org.name }))
+	)
+	const locations: FormData[] = $derived(
+		data.locations.map(location => ({ id: String(location.id), value: location.name }))
+	)
 	let newEventName = $state('');
 	let newLocationName = $state('');
 	let newOrganizerName = $state('');
@@ -24,9 +28,9 @@
 		data.organizers.find(org => String(org.id) === selectedOrganizer)?.name || "Select an organizer",
 	);
 	let selectedLocation: string | undefined = $state();
-	let a = $state(1);
-	let b = $state(2);
-
+	let selectedLocationName: string | undefined = $derived(
+		data.locations.find(location => String(location.id) === selectedLocation)?.name || "Select a location",
+	);
 </script>
 
 <h1 class="font-bold text-xl">Admin panel</h1>
@@ -70,7 +74,7 @@
 	<div class="max-h-59 col-span-3">
 		<SimpleTable
 			class="rounded-md border flex flex-col max-h-full overflow-y-auto"
-			rows={organizerRows()}
+			rows={organizers}
 			columns={["Organizer Id", "Organizer name"]} />
 	</div>
 	<form method="post" action="?/create-location" class="col-span-2" use:enhance>
@@ -96,18 +100,33 @@
 				<Card.Description>Events are center to this website. That's what people go to look for</Card.Description>
 			</Card.Header>
 			<Card.Content class="grow-1">
-				<form method="POST">
+				<form method="POST" class="flex flex-col gap-2">
 					<Input name="name" type="text" bind:value={newEventName} placeholder="Event name" />
-					<Select.Root type="single" name="selectedOrganizer" bind:value={selectedOrganizer}>
-						<Select.Trigger>
+					<Select.Root required type="single" name="selectedOrganizer" bind:value={selectedOrganizer}>
+						<Select.Trigger class="w-full">
 							{selectedOrganizerName}
 						</Select.Trigger>
 						<Select.Content>
 							<Select.Group>
 								<Select.Label>Organizers</Select.Label>
-								{#each organizerRows() as organizer (organizer.id)}
+								{#each organizers as organizer (organizer.id)}
 									<Select.Item value={organizer.id} label={organizer.value}>
 										{organizer.value}
+									</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+					<Select.Root required type="single" name="selectedLocation" bind:value={selectedLocation}>
+						<Select.Trigger class="w-full">
+							{selectedLocationName}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Locations</Select.Label>
+								{#each locations as location (location.id)}
+									<Select.Item value={location.id} label={location.value}>
+										{location.value}
 									</Select.Item>
 								{/each}
 							</Select.Group>
