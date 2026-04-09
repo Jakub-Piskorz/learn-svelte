@@ -21,6 +21,7 @@
 		data.locations.map(location => ({ id: String(location.id), value: location.name }))
 	)
 	let newEventName = $state('');
+	let newEventDescription = $state('');
 	let newLocationName = $state('');
 	let newOrganizerName = $state('');
 	let selectedOrganizer: string | undefined = $state();
@@ -84,7 +85,7 @@
 				<Card.Description>Locations are places, where events happen. (Protesty)</Card.Description>
 			</Card.Header>
 			<Card.Content class="grow-1">
-				<Input name="name" type="text" bind:value={newLocationName} placeholder="Location name" />
+				<Input name="name" required type="text" bind:value={newLocationName} placeholder="Location name" />
 			</Card.Content>
 			<Card.Footer>
 				<Button type="submit" class="w-full">Add location</Button>
@@ -101,7 +102,8 @@
 			</Card.Header>
 			<Card.Content class="grow-1">
 				<form method="POST" class="flex flex-col gap-2">
-					<Input name="name" type="text" bind:value={newEventName} placeholder="Event name" />
+					<Input name="name" required type="text" bind:value={newEventName} placeholder="Event name" />
+					<Input name="description" class="h-20" type="text" bind:value={newEventDescription} placeholder="Event description" />
 					<Select.Root required type="single" name="selectedOrganizer" bind:value={selectedOrganizer}>
 						<Select.Trigger class="w-full">
 							{selectedOrganizerName}
@@ -147,7 +149,7 @@
 				<Card.Description>Organizers are organisations or private people who host events.</Card.Description>
 			</Card.Header>
 			<Card.Content class="grow-1">
-				<Input name="name" type="text" bind:value={newOrganizerName} placeholder="Organizer name" />
+				<Input name="name" required type="text" bind:value={newOrganizerName} placeholder="Organizer name" />
 			</Card.Content>
 			<Card.Footer>
 				<Button type="submit" class="w-full">Add Organizer</Button>

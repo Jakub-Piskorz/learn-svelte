@@ -5,6 +5,7 @@ import { createLocation, deleteLocation } from '$libServer/location/services';
 import { createOrganizer, deleteOrganizer } from '$libServer/organizer/services';
 import { db } from '$libServer/db';
 import getUserFromToken from '$libServer/helpers/getUserFromToken';
+import { createEvent, deleteEvent } from '$libServer/event/services';
 
 export const load = async () => {
 	await requireAdmin("Only administrators can view this page");
@@ -45,14 +46,27 @@ export const actions = {
 		const result = await createOrganizer({name});
 		return { success: true, result: result.fields };
 	},
-	'delete-organizer': async ({request}) => {
+	'create-event': async ({request}) => {
+		await requireAdmin();
+		const data = await request.formData();
+		const name = data.get('name') as string | null;
+		const description = data.get('description') as string | undefined;
+		const locationId = data.get('selectedLocation') as number | null;
+		const organizerId = data.get('selectedOrganizer') as number | null;
+		if (!name || !locationId || !organizerId) {
+			return fail(404, { missing: true });
+		}
+		const result = await createEvent({name, description, organizerId, locationId});
+		return { success: true, result: result.fields }
+	},
+	'delete-event': async ({request}) => {
 		await requireAdmin();
 		const data = await request.formData();
 		const id = data.get('id') as number | null;
 		if (!id) {
 			return fail(404, { id, missing: true });
 		}
-		const result = await deleteOrganizer({id});
+		const result = await deleteEvent({id});
 		return { success: true, result: result.fields }
 	},
 
