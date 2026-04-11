@@ -7,6 +7,5 @@ export type userFromToken = {
 
 export default function getUserFromToken() {
 	const {locals} = getRequestEvent();
-	console.log(locals.user)
 	return locals.user as userFromToken | null;
 }

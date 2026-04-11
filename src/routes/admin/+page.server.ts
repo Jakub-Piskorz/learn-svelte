@@ -2,7 +2,7 @@ import { fail } from '@sveltejs/kit';
 import requireAdmin from '$libServer/helpers/requireAdmin';
 import type { Actions } from '../../../.svelte-kit/types/src/routes/demo/lucia/login/$types';
 import { createLocation, deleteLocation } from '$libServer/location/services';
-import { createOrganizer, deleteOrganizer } from '$libServer/organizer/services';
+import { createOrganizer } from '$libServer/organizer/services';
 import { db } from '$libServer/db';
 import getUserFromToken from '$libServer/helpers/getUserFromToken';
 import { createEvent, deleteEvent } from '$libServer/event/services';
@@ -49,7 +49,7 @@ export const actions = {
 	'create-event': async ({request}) => {
 		await requireAdmin();
 		const data = await request.formData();
-		const name = data.get('name') as string | null;
+		const name = data.get('name') as string;
 		const description = data.get('description') as string | undefined;
 		const locationId = data.get('selectedLocation') as number | null;
 		const organizerId = data.get('selectedOrganizer') as number | null;
