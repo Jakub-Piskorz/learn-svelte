@@ -1,6 +1,5 @@
 import { db } from '$libServer/db';
 import {event} from '$libServer/db/schema/event';
-import { location } from '$libServer/db/schema';
 import { eq } from 'drizzle-orm';
 
 export type CreateEventInput = {
@@ -21,5 +20,5 @@ export async function createEvent(eventInput: CreateEventInput) {
 }
 
 export async function deleteEvent({id}: DeleteEventInput) {
-	return db.delete(location).where(eq(location.id, id))
+	return db.delete(event).where(eq(event.id, id))
 }
