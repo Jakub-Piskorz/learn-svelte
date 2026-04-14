@@ -1,5 +1,6 @@
 import { integer, serial, text } from 'drizzle-orm/pg-core';
 import { mySchema } from './mySchema';
+import { timestamps } from '../helpers';
 
 export const event = mySchema.table('event', {
 	id: serial('id').primaryKey(),
@@ -8,6 +9,7 @@ export const event = mySchema.table('event', {
 	description: text('description'),
 	locationId: integer('locationId').notNull(),
 	plannedDuration: text('plannedDuration'),
+	...timestamps()
 });
 
 export type Event = typeof event.$inferSelect;
